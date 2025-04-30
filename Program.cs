@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Numerics;
 using Raylib_cs;
 
 namespace Main;
@@ -8,6 +9,9 @@ class Program
 {
     public static void Main()
     {
+        // Set Game State
+        GameState gm = new GameState();
+
         // Init Window
         Raylib.InitWindow((int)Win.Width, (int)Win.Height, "Slime Hunt 2");
 
@@ -15,11 +19,11 @@ class Program
         while (!Raylib.WindowShouldClose())
         {
             // Update Stuff
-            GameState.Update();
+            gm.Update();
 
             // Draw Stuff
             Raylib.BeginDrawing();
-                GameState.Draw();
+                gm.Draw();
             Raylib.EndDrawing();
         }
 
