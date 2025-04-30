@@ -27,6 +27,7 @@ class Program
             Raylib.EndDrawing();
         }
 
+        // Exit
         Raylib.CloseWindow();
     }
 }
