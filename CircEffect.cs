@@ -11,17 +11,18 @@ class CircEffect
     public Vector2 pos;
     public double radius;
     public double maxRadius;
+    public double minRadius;
     public double speed;
     public String mode;
     public Color color;
     public double alpha;
-    private double elapsed;
 
     // Constructor
-    public CircEffect(Vector2 pos, int radius, int maxRadius, double speed, String mode, Color color, double alpha)
+    public CircEffect(Vector2 pos, int radius, int minRadius, int maxRadius, double speed, String mode, Color color, double alpha)
     {
         this.pos = pos;
         this.radius = radius;
+        this.minRadius = minRadius;
         this.maxRadius = maxRadius;
         this.speed = speed;
         this.mode = mode;
@@ -32,22 +33,26 @@ class CircEffect
     // Update
     public void Update(double dt, List<CircEffect> circeffects)
     {
-        elapsed += dt;
-        double t = Math.Min(elapsed / (maxRadius/speed), 1.0);
-
         // Explode
-        if (mode == "Explode") {
-            radius = 1 + (maxRadius - 1) * t;
-            alpha = 1.0 - t;
+        if (mode == "Explode")
+        {
+            if (radius < maxRadius) 
+            {
+                radius += speed * dt; 
+                alpha = 1.0 - ((radius - minRadius) / (maxRadius - minRadius));
+            }
+            else { circeffects.Remove(this);}
         }
         // Implode
-        else if (mode == "Implode") {
-            radius = maxRadius + (maxRadius - 1) * t;
-            alpha = 1.0 - t;
-        }
-        if (t >= 1.0)
+        if (mode == "Implode")
         {
-            circeffects.Remove(this);
+            if (radius > minRadius) 
+            { 
+                radius -= speed * dt; 
+                alpha = (radius - minRadius) / (maxRadius - minRadius);
+                alpha = Math.Max(0.0, Math.Min(1.0, alpha));
+            }
+            else { circeffects.Remove(this);}
         }
     }
 

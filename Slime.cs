@@ -42,11 +42,11 @@ class Slime
         // If True
         if (Raylib.CheckCollisionRecs(pRect, sRect)) 
         {
-            // Effect
-            circeffects.Add(new CircEffect(new Vector2(pos.X, pos.Y), 1, 50, 100, "Explode", Color.Lime, 1.0));
+            circeffects.Add(new CircEffect(new Vector2(pos.X, pos.Y), 1, 1, 50, 100, "Explode", Color.Lime, 1.0)); // effect
             pos.X = random.Next(0+width, (int)Win.Width-width); // 0 to 1000-w
             pos.Y = random.Next(0+height, (int)Win.Height-height); // 0 to 800-w
-            player.score += points;
+            player.slimes += points; // slime
+            player.timer += points; // timer
         }
     }
 

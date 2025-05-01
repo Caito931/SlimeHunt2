@@ -39,26 +39,23 @@ class GameState
     // Update
     public void Update()
     {
+        // Delta Time
         double dt = Raylib.GetFrameTime();
-        player.Update(dt);
-        foreach(Slime slime in slimes) { slime.Update(dt, player, circeffects); }
-        for (int i = circeffects.Count - 1; i >= 0; i--)
-        {
-            circeffects[i].Update(dt, circeffects);
-        }
+
+        player.Update(dt, circeffects); // Player
+        foreach(Slime slime in slimes) { slime.Update(dt, player, circeffects); } // Slime
+        for (int i = circeffects.Count - 1; i >= 0; i--) { circeffects[i].Update(dt, circeffects); } // Circle Effect
     }
 
     // Draw
     public void Draw()
     {
+        // Background
         Raylib.ClearBackground(Color.RayWhite);
-        player.Draw(fontsize);
-        foreach(Slime slime in slimes) { slime.Draw(); }
 
-        for (int i = circeffects.Count - 1; i >= 0; i--)
-        {
-            circeffects[i].Draw();
-        }
+        player.Draw(fontsize); // Player
+        foreach(Slime slime in slimes) { slime.Draw(); } // Slime
+        for (int i = circeffects.Count - 1; i >= 0; i--){ circeffects[i].Draw();} // Circle Effect
 
         // DEBUG
         Raylib.DrawText(Convert.ToString(Raylib.GetFPS()), (int)Win.Width-100, 0, fontsize, Color.Black);

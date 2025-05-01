@@ -15,14 +15,15 @@ class Player
     public int height;
     public int speed;
     public int dashSpeed;
-    public int score;
+    public int slimes;
     public Color color;
     public double rotation;
     public double rotationSpeed = 300;
     public String dir = "";
+    public double timer = 10;
 
     // Constructor
-    public Player(Vector2 pos, String id, int width, int height, int speed, int dashSpeed,int score, Color color)
+    public Player(Vector2 pos, String id, int width, int height, int speed, int dashSpeed,int slimes, Color color)
     {
         this.pos = pos;
         this.id = id;
@@ -30,19 +31,20 @@ class Player
         this.height = height;
         this.speed = speed;
         this.dashSpeed = dashSpeed;
-        this.score = score;
+        this.slimes = slimes;
         this.color = color;
     }
 
     // Update
-    public void Update(double dt)
+    public void Update(double dt, List<CircEffect> circeffects)
     {
-        Move(dt);
+        Move(dt, circeffects);
         KeepInBounds();
+        UpdateTimer(dt);
     }
 
     // Move
-    public void Move(double dt)
+    public void Move(double dt, List<CircEffect> circeffects)
     {
         // Up
         if (Raylib.IsKeyDown(KeyboardKey.W)) {pos.Y -= (float)speed * (float)dt; dir="up"; }
@@ -56,10 +58,20 @@ class Player
         // Dash
         if (Raylib.IsKeyPressed(KeyboardKey.Space))
         {
-            if (dir == "up" && score >= 1) {pos.Y -= dashSpeed; score--;}
-            if (dir == "down" && score >= 1) {pos.Y += dashSpeed; score--;}
-            if (dir == "left" && score >= 1) {pos.X -= dashSpeed; score--;}
-            if (dir == "right" && score >= 1) {pos.X += dashSpeed; score--;}
+            if (slimes >= 1) 
+            {
+                // Past Effect
+                circeffects.Add(new CircEffect(new Vector2(pos.X+width/2, pos.Y+height/2), 50, 1, 50, 75, "Implode", Color.SkyBlue, 1.0));
+                
+                // Actions
+                if (dir == "up") {pos.Y -= dashSpeed; slimes--;}
+                if (dir == "down") {pos.Y += dashSpeed; slimes--;}
+                if (dir == "left") {pos.X -= dashSpeed; slimes--;}
+                if (dir == "right") {pos.X += dashSpeed; slimes--;}
+                
+                // New Effect
+                circeffects.Add(new CircEffect(new Vector2(pos.X+width/2, pos.Y+height/2), 50, 1, 50, 75, "Implode", Color.SkyBlue, 1.0));
+            }
         }
 
         // Rotate
@@ -77,6 +89,13 @@ class Player
         else if (pos.Y + height >= (int)Win.Height) { pos.Y = (int)Win.Height - height; }
     }
 
+    // Update Timer
+    public void UpdateTimer(double dt)
+    {
+        if (timer > 0) { timer -= 1 * dt; }
+        if (timer <= 0) {Raylib.CloseWindow();}
+    }
+
     // Draw
     public void Draw(int fontsize)
     {
@@ -86,7 +105,13 @@ class Player
         //Raylib.DrawRectangle((int)pos.X, (int)pos.Y, width, height, color);
 
         // Draw score
-        Raylib.DrawText($"Total Slimes: {Convert.ToString(score)}", 0, 0, fontsize, Color.Black);
+        Raylib.DrawText($"Total Slimes: {Convert.ToString(slimes)}", 0, 0, fontsize, Color.Black);
+
+        // Draw Timer
+        Vector2 timerPos = new Vector2((int)Win.Width/2 -250, 15);
+        Vector2 timerSize = new Vector2((float)timer*50, 50);
+        Raylib.DrawRectangleV(timerPos, timerSize, Color.Green); // Accept Float Values
+        //Raylib.DrawRectangle((int)Win.Width/2 -250, 15, (int)timer*50, 50, Color.Green); // Normal
     }
 
 }
