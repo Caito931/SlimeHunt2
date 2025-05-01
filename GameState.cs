@@ -11,10 +11,11 @@ class GameState
     // Random
     Random random = new Random();
 
-    // Load Stuff
+    // Setup Stuff
     Player player;
     int fontsize;
     List<Slime> slimes = new List<Slime>();
+    List<CircEffect> circeffects = new List<CircEffect>(); // Global
 
     // Load
     public void Load()
@@ -40,7 +41,11 @@ class GameState
     {
         double dt = Raylib.GetFrameTime();
         player.Update(dt);
-        foreach(Slime slime in slimes) { slime.Update(dt, player); }
+        foreach(Slime slime in slimes) { slime.Update(dt, player, circeffects); }
+        for (int i = circeffects.Count - 1; i >= 0; i--)
+        {
+            circeffects[i].Update(dt, circeffects);
+        }
     }
 
     // Draw
@@ -49,6 +54,11 @@ class GameState
         Raylib.ClearBackground(Color.RayWhite);
         player.Draw(fontsize);
         foreach(Slime slime in slimes) { slime.Draw(); }
+
+        for (int i = circeffects.Count - 1; i >= 0; i--)
+        {
+            circeffects[i].Draw();
+        }
 
         // DEBUG
         Raylib.DrawText(Convert.ToString(Raylib.GetFPS()), (int)Win.Width-100, 0, fontsize, Color.Black);
