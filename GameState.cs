@@ -11,7 +11,7 @@ class GameState
     // Load Stuff
 
     // Player
-    Player player = new Player(new Vector2(200, 200), "1", 50, 50, 200, 0, Color.Blue);
+    Player player = new Player(new Vector2(200, 200), "1", 50, 50, 200, 100, 0, Color.Blue);
 
     // Slime
     Slime slime = new Slime(new Vector2(400, 600), 25, 25, 1, Color.Green);
@@ -33,5 +33,8 @@ class GameState
         Raylib.ClearBackground(Color.RayWhite);
         player.Draw(fontsize);
         slime.Draw();
+
+        // DEBUG
+        Raylib.DrawText(Convert.ToString(Raylib.GetFPS()), (int)Win.Width-100, 0, fontsize, Color.Black);
     }
 }
