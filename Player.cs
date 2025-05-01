@@ -83,10 +83,10 @@ class Player
     {
         // X
         if (pos.X <= 0) { pos.X = 0; }
-        else if (pos.X + width >= (int)Win.Width) { pos.X = (int)Win.Width - width; }
+        else if (pos.X + width >= GameConfig.Width) { pos.X = GameConfig.Width - width; }
         // Y
         if (pos.Y <= 0) { pos.Y = 0; }
-        else if (pos.Y + height >= (int)Win.Height) { pos.Y = (int)Win.Height - height; }
+        else if (pos.Y + height >= GameConfig.Height) { pos.Y = GameConfig.Height - height; }
     }
 
     // Update Timer
@@ -108,7 +108,7 @@ class Player
         Raylib.DrawText($"Total Slimes: {Convert.ToString(slimes)}", 0, 0, fontsize, Color.Black);
 
         // Draw Timer
-        Vector2 timerPos = new Vector2((int)Win.Width/2 -250, 15);
+        Vector2 timerPos = new Vector2(GameConfig.Width/2 -250, 15);
         Vector2 timerSize = new Vector2((float)timer*50, 50);
         Raylib.DrawRectangleV(timerPos, timerSize, Color.Green); // Accept Float Values
         //Raylib.DrawRectangle((int)Win.Width/2 -250, 15, (int)timer*50, 50, Color.Green); // Normal

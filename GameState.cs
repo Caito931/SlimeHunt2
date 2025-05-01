@@ -9,11 +9,11 @@ namespace Main;
 class GameState
 {
     // Random
-    Random random = new Random();
+    private static Random random = new Random();
 
     // Setup Stuff
     Player player;
-    int fontsize;
+    private int fontsize;
     List<Slime> slimes = new List<Slime>();
     List<CircEffect> circeffects = new List<CircEffect>(); // Global
 
@@ -24,13 +24,7 @@ class GameState
         player = new Player(new Vector2(200, 200), "1", 50, 50, 200, 100, 0, Color.Blue);
 
         // Slimes
-        for (int i = 0; i < 3; i++) // 3
-        {
-            slimes.Add(new Slime(
-                new Vector2(random.Next(0+25,(int)Win.Width-25), // x
-                random.Next(0+25, (int)Win.Height-25)), // y
-                25, 25, 1, Color.Green)); // w h points color
-        }
+        slimes = Slime.SpawnSlimes(3);
 
         // Font
         fontsize = 24;
@@ -58,6 +52,6 @@ class GameState
         for (int i = circeffects.Count - 1; i >= 0; i--){ circeffects[i].Draw();} // Circle Effect
 
         // DEBUG
-        Raylib.DrawText(Convert.ToString(Raylib.GetFPS()), (int)Win.Width-100, 0, fontsize, Color.Black);
+        Raylib.DrawText(Convert.ToString(Raylib.GetFPS()), GameConfig.Width-100, 0, fontsize, Color.Black);
     }
 }

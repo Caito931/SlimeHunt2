@@ -9,14 +9,14 @@ class Program
 {
     public static void Main()
     {
+        // Init Window
+        Raylib.InitWindow(GameConfig.Width, GameConfig.Height, "Slime Hunt 2");
+
         // Set Game State
         GameState gm = new GameState();
 
         // Load Stuff
         gm.Load();
-
-        // Init Window
-        Raylib.InitWindow((int)Win.Width, (int)Win.Height, "Slime Hunt 2");
 
         // Loop
         while (!Raylib.WindowShouldClose())
@@ -33,11 +33,4 @@ class Program
         // Exit
         Raylib.CloseWindow();
     }
-}
-
-// Window Properties
-public enum Win
-{
-    Width = 1000,
-    Height = 800
 }

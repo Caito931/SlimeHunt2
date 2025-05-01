@@ -15,7 +15,7 @@ class Slime
     public Color color;
 
     // Random
-    Random random = new Random();
+    private static Random random = new Random();
 
     // Constructor
     public Slime(Vector2 pos, int width, int height, int points, Color color)
@@ -43,11 +43,27 @@ class Slime
         if (Raylib.CheckCollisionRecs(pRect, sRect)) 
         {
             circeffects.Add(new CircEffect(new Vector2(pos.X, pos.Y), 1, 1, 50, 100, "Explode", Color.Lime, 1.0)); // effect
-            pos.X = random.Next(0+width, (int)Win.Width-width); // 0 to 1000-w
-            pos.Y = random.Next(0+height, (int)Win.Height-height); // 0 to 800-w
+            pos.X = random.Next(0+width, GameConfig.Width-width); // 0 to 1000-w
+            pos.Y = random.Next(0+height, GameConfig.Height-height); // 0 to 800-w
             player.slimes += points; // slime
             player.timer += points; // timer
         }
+    }
+
+    // Spawn
+    public static List<Slime> SpawnSlimes(int count)
+    {
+        var slimes = new List<Slime>();
+        if (count <=0 ) {return slimes; }
+
+        for (int i = 0; i < count; i++) 
+        {
+            slimes.Add(new Slime(
+                new Vector2(random.Next(0+25, GameConfig.Width-25), // x
+                random.Next(0+25, GameConfig.Height-25)), // y
+                25, 25, 1, Color.Green)); // w h points color
+        }
+        return slimes;
     }
 
 
