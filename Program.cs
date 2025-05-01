@@ -12,6 +12,9 @@ class Program
         // Set Game State
         GameState gm = new GameState();
 
+        // Load Stuff
+        gm.Load();
+
         // Init Window
         Raylib.InitWindow((int)Win.Width, (int)Win.Height, "Slime Hunt 2");
 

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SlimeHunt2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb905771e39b8d8a62767d57ad230397d44bba86")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ca519763ed07085e99db00d748c3f2a5bb38c8c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SlimeHunt2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SlimeHunt2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

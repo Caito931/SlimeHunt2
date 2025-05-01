@@ -8,23 +8,39 @@ namespace Main;
 
 class GameState
 {
+    // Random
+    Random random = new Random();
+
     // Load Stuff
+    Player player;
+    int fontsize;
+    List<Slime> slimes = new List<Slime>();
 
-    // Player
-    Player player = new Player(new Vector2(200, 200), "1", 50, 50, 200, 100, 0, Color.Blue);
+    // Load
+    public void Load()
+    {
+        // Player
+        player = new Player(new Vector2(200, 200), "1", 50, 50, 200, 100, 0, Color.Blue);
 
-    // Slime
-    Slime slime = new Slime(new Vector2(400, 600), 25, 25, 1, Color.Green);
+        // Slimes
+        for (int i = 0; i < 3; i++) // 3
+        {
+            slimes.Add(new Slime(
+                new Vector2(random.Next(0+25,(int)Win.Width-25), // x
+                random.Next(0+25, (int)Win.Height-25)), // y
+                25, 25, 1, Color.Green)); // w h points color
+        }
 
-    // Font
-    int fontsize = 24;
+        // Font
+        fontsize = 24;
+    }
 
     // Update
     public void Update()
     {
         double dt = Raylib.GetFrameTime();
         player.Update(dt);
-        slime.Update(dt, player);
+        foreach(Slime slime in slimes) { slime.Update(dt, player); }
     }
 
     // Draw
@@ -32,7 +48,7 @@ class GameState
     {
         Raylib.ClearBackground(Color.RayWhite);
         player.Draw(fontsize);
-        slime.Draw();
+        foreach(Slime slime in slimes) { slime.Draw(); }
 
         // DEBUG
         Raylib.DrawText(Convert.ToString(Raylib.GetFPS()), (int)Win.Width-100, 0, fontsize, Color.Black);
