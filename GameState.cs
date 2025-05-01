@@ -12,7 +12,7 @@ class GameState
     private static Random random = new Random();
 
     // Setup Stuff
-    Player player;
+    Player? player;
     private int fontsize;
     List<Slime> slimes = new List<Slime>();
     List<CircEffect> circeffects = new List<CircEffect>(); // Global
@@ -36,7 +36,7 @@ class GameState
         // Delta Time
         double dt = Raylib.GetFrameTime();
 
-        player.Update(dt, circeffects); // Player
+        player!.Update(dt, circeffects); // Player
         foreach(Slime slime in slimes) { slime.Update(dt, player, circeffects); } // Slime
         for (int i = circeffects.Count - 1; i >= 0; i--) { circeffects[i].Update(dt, circeffects); } // Circle Effect
     }
@@ -47,7 +47,7 @@ class GameState
         // Background
         Raylib.ClearBackground(Color.RayWhite);
 
-        player.Draw(fontsize); // Player
+        player!.Draw(fontsize); // Player
         foreach(Slime slime in slimes) { slime.Draw(); } // Slime
         for (int i = circeffects.Count - 1; i >= 0; i--){ circeffects[i].Draw();} // Circle Effect
 

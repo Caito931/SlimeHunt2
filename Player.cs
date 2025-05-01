@@ -2,7 +2,6 @@
 using System;
 using System.Numerics;
 using Raylib_cs;
-using rlgl = Raylib_cs.Rlgl;
 
 namespace Main;
 
