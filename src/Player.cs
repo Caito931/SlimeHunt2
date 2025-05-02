@@ -20,6 +20,8 @@ class Player
     public double rotationSpeed = 300;
     public String dir = "";
     public double timer = 10;
+    public static Image img = Raylib.LoadImage("assets/player.png");
+    public static Texture2D texture = Raylib.LoadTextureFromImage(img);
 
     // Constructor
     public Player(Vector2 pos, String id, int width, int height, int speed, int dashSpeed,int slimes, Color color)
@@ -99,8 +101,15 @@ class Player
     public void Draw(int fontsize)
     {
         // Draw itself
-        Rectangle pRect = new Rectangle(pos.X+width/2, pos.Y+height/2, width, height);
-        Raylib.DrawRectanglePro(pRect, new Vector2(width/2, height/2), (float)rotation, color);
+        // Rectangle pRect = new Rectangle(pos.X+width/2, pos.Y+height/2, width, height);
+        // Raylib.DrawRectanglePro(pRect, new Vector2(width/2, height/2), (float)rotation, color);
+
+        // Draw Image
+        Rectangle sourceRec = new Rectangle(0.0f, 0.0f, texture.Width, texture.Height);
+        Rectangle destRec = new Rectangle(pos.X+width/2, pos.Y+height/2, width, height); // width is 50 and height also
+        Vector2 origin = new Vector2(destRec.Width / 2, destRec.Height / 2);
+        Raylib.DrawTexturePro(texture, sourceRec, destRec, origin, (float)rotation, Color.White);
+
         //Raylib.DrawRectangle((int)pos.X, (int)pos.Y, width, height, color);
 
         // Draw score

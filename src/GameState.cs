@@ -22,6 +22,7 @@ class GameState
     {
         // Player
         player = new Player(new Vector2(200, 200), "1", 50, 50, 200, 100, 0, Color.Blue);
+        Raylib.UnloadImage(Player.img);
 
         // Slimes
         slimes = Slime.SpawnSlimes(3);
