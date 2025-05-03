@@ -22,6 +22,7 @@ class Player
     public double timer = 10;
     public static Image img = Raylib.LoadImage("assets/player.png");
     public static Texture2D texture = Raylib.LoadTextureFromImage(img);
+    public const int MaxTimer = 10;
 
     // Constructor
     public Player(Vector2 pos, String id, int width, int height, int speed, int dashSpeed,int slimes, Color color)
@@ -93,8 +94,9 @@ class Player
     // Update Timer
     public void UpdateTimer(double dt)
     {
-        if (timer > 0) { timer -= 1 * dt; }
-        if (timer <= 0) {Raylib.CloseWindow();}
+        if (timer > Player.MaxTimer ) { timer = Player.MaxTimer; }
+        else if (timer > 0) { timer -= 1 * dt; }
+        else if (timer <= 0) {Raylib.CloseWindow();}
     }
 
     // Draw
