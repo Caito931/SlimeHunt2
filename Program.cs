@@ -1,4 +1,5 @@
-﻿
+﻿// Program.cs
+
 using System;
 using System.Numerics;
 using Raylib_cs;
@@ -37,7 +38,7 @@ class Program
 }
 
 // TODO
-// 1- Adicionar Sprites/Imagens
-// 2- Adicionar Um Menu
+// 1- Adicionar Sprites/Imagens (x)
+// 2- Adicionar Um Menu (x)
 // 3- Adicionar Mais Efeitos
 // 4- Adicionar Restart
