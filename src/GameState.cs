@@ -13,49 +13,40 @@ class GameState
     // Random
     private static Random random = new Random();
 
-    // Setup Stuff
-    Player? player;
-    private int fontsize;
-    List<Slime> slimes = new List<Slime>();
-    Button? StartBtn;
-    Button? QuitBtn;
-    List<CircEffect> circeffects = new List<CircEffect>(); // Global
-    List<Button> buttons = new List<Button>(); // Global
-
     // Load
     public void Load()
     {
         // Player
-        player = new Player(new Vector2(200, 200), "1", 50, 50, 200, 100, 0, Color.Blue);
+        GameObject.player = new Player(new Vector2(200, 200), "1", 50, 50, 200, 100, 0, Color.Blue);
         Raylib.UnloadImage(Player.img);
 
         // Start Button
-        StartBtn = new Button(new Vector2(GameConfig.Width/2-100,300), 200, 50, 24, "Start", Color.DarkGreen, Color.Green, Color.Green, Color.Black);
+        GameObject.StartBtn = new Button(new Vector2(GameConfig.Width/2-100,300), 200, 50, 24, "Start", Color.DarkGreen, Color.Green, Color.Green, Color.Black);
 
         // Quit Button
-        QuitBtn = new Button(new Vector2(GameConfig.Width/2-100, 400), 200, 50, 24, "Quit", Color.DarkGreen, Color.Green, Color.Green, Color.Black);
+        GameObject.QuitBtn = new Button(new Vector2(GameConfig.Width/2-100, 400), 200, 50, 24, "Quit", Color.DarkGreen, Color.Green, Color.Green, Color.Black);
 
         // Start
-        StartBtn!.onReleaseAction = () =>
+        GameObject.StartBtn!.onReleaseAction = () =>
         {
             GameConfig.menuOpen = false;
         };
         
         // Quit
-        QuitBtn!.onReleaseAction = () =>
+        GameObject.QuitBtn!.onReleaseAction = () =>
         {
             Raylib.CloseWindow();
         };
 
         // Buttons
-        buttons.Add(StartBtn);
-        buttons.Add(QuitBtn);
+        GameObject.buttons.Add(GameObject.StartBtn);
+        GameObject.buttons.Add(GameObject.QuitBtn);
 
         // Slimes
-        slimes = Slime.SpawnSlimes(3);
+        GameObject.slimes = Slime.SpawnSlimes(3);
 
         // Font
-        fontsize = 24;
+        GameObject.fontsize = 24;
     }
 
     // Update
@@ -69,16 +60,28 @@ class GameState
             // Menu Logic
             //--------------------------------
 
-            foreach (Button btn in buttons) { btn!.Update(dt); }
+            foreach (Button btn in GameObject.buttons) { btn!.Update(dt); }
         }
         else
         {
             // Game Logic
             //--------------------------------
 
-            player!.Update(dt, circeffects); // Player
-            foreach(Slime slime in slimes) { slime.Update(dt, player, circeffects); } // Slime
-            for (int i = circeffects.Count - 1; i >= 0; i--) { circeffects[i].Update(dt, circeffects); } // Circle Effect
+            // Player
+            GameObject.player!.Update(dt, GameObject.circeffects); 
+            
+            // Slime
+            foreach(Slime slime in GameObject.slimes) 
+            { 
+                slime.Update(dt, GameObject.player, GameObject.circeffects); 
+            } 
+            
+            // Circle Effect
+            for (int i = GameObject.circeffects.Count - 1; i >= 0; i--) 
+            { 
+                GameObject.circeffects[i].Update(dt, GameObject.circeffects); 
+            } 
+            
         }
     }
 
@@ -93,7 +96,7 @@ class GameState
             // Menu Draw
             //--------------------------------
 
-            foreach (Button btn in buttons) { btn!.Draw(); }
+            foreach (Button btn in GameObject.buttons) { btn!.Draw(); }
 
             // Title
             String TitleText = "Slime Hunt 2!";
@@ -104,12 +107,23 @@ class GameState
             // Game Draw
             //--------------------------------
 
-            player!.Draw(fontsize); // Player
-            foreach(Slime slime in slimes) { slime.Draw(); } // Slime
-            for (int i = circeffects.Count - 1; i >= 0; i--){ circeffects[i].Draw();} // Circle Effect
+            // Player
+            GameObject.player!.Draw(GameObject.fontsize); 
+
+            // Circle Effect
+            foreach(Slime slime in GameObject.slimes) 
+            {
+                slime.Draw(); 
+            }
+            
+            // Circle Effect
+            for (int i = GameObject.circeffects.Count - 1; i >= 0; i--)
+            { 
+                GameObject.circeffects[i].Draw();
+            } 
 
             // DEBUG
-            Raylib.DrawText(Convert.ToString(Raylib.GetFPS()), GameConfig.Width-100, 0, fontsize, Color.Black);
+            Raylib.DrawText(Convert.ToString(Raylib.GetFPS()), GameConfig.Width-100, 0, GameObject.fontsize, Color.Black);
         }
     }
 }

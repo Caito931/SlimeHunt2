@@ -12,7 +12,7 @@ class Program
     {
         // Init Window
         Raylib.InitWindow(GameConfig.Width, GameConfig.Height, "Slime Hunt 2");
-        Raylib.SetTargetFPS(60);
+        Raylib.SetTargetFPS(120);
 
         // Set Game State
         GameState gm = new GameState();
